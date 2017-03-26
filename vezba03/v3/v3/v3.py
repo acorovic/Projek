@@ -1,4 +1,5 @@
 import math
+import time
 
 def parentH(i):
     return math.floor(i/2)
@@ -69,13 +70,18 @@ def heapIncreaseKey(A, i, key):
 
 class HeapClass:
     heapsize = 0
-    heap = ['x',10,12,8,5,9]
+    heap = ['x',1,2,8,5,9]
 
     def __init__(self):
         heapsize = 0
 
 A = HeapClass()
 buildMaxHeap(A)
-print(A.heap, A.heapsize)
-maxHeapInsert(A, 4)
-print(A.heap)
+# A is a max priorityQueue
+while(A.heapsize >= 1):
+    sleepTime = heapExtractMax(A)
+    if(time != None):
+        print("Task with duration: ", sleepTime, " is in progress") 
+        time.sleep(sleepTime)
+
+print("All tasks finished");
