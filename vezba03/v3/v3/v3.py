@@ -1,6 +1,6 @@
 import math
 
-def parent(i):
+def parentH(i):
     return math.floor(i/2)
 
 def left(i):
@@ -24,13 +24,13 @@ def maxHeapify(A,i):
         A.heap[largest] = temp
         maxHeapify(A, largest)
 
-def bulidMaxHeap(A):
+def buildMaxHeap(A):
     A.heapsize = len(A.heap) -1 
     for i in range(math.floor(len(A.heap)/2), 0, -1):
         maxHeapify(A, i)
 
 def heapSort(A):
-    bulidMaxHeap(A)
+    buildMaxHeap(A)
     for i in range(len(A.heap)-1, 1, -1):
         temp = A.heap[1]
         A.heap[1] = A.heap[i]
@@ -41,6 +41,31 @@ def heapSort(A):
 def heapMax(A):
     return A[1]
 
+def heapExtractMax(A):
+    if A.heapsize < 1:
+        print("heap underflow")
+        return
+    max = A.heap[1]
+    A.heap[1] = A.heap[A.heapsize]
+    A.heapsize -= 1
+    maxHeapify(A,1)
+    return max
+
+def maxHeapInsert(A, key):
+    A.heapsize += 1
+    A.heap.append(-math.inf)
+    heapIncreaseKey(A, A.heapsize, key)
+
+def heapIncreaseKey(A, i, key):
+    if key < A.heap[i]:
+        print("new key is smaller than current key")
+        return
+    A.heap[i] = key
+    while i > 1 and A.heap[parentH(i)] < A.heap[i]:
+        temp = A.heap[parentH(i)]
+        A.heap[parentH(i)] = A.heap[i]
+        A.heap[i] = temp
+        i = parentH(i)
 
 class HeapClass:
     heapsize = 0
@@ -50,5 +75,7 @@ class HeapClass:
         heapsize = 0
 
 A = HeapClass()
-heapSort(A)
+buildMaxHeap(A)
+print(A.heap, A.heapsize)
+maxHeapInsert(A, 4)
 print(A.heap)
